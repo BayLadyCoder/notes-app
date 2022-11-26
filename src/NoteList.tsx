@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Button, Col, Row, Stack, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ReactSelect from 'react-select';
+import { NoteCard } from './NoteCard';
 import { Note, Tag } from './types';
 
 type NoteListProps = { availableTags: Tag[]; notes: Note[] };
@@ -43,7 +44,7 @@ export const NoteList = ({ availableTags, notes }: NoteListProps) => {
         </Col>
       </Row>
       <Form>
-        <Row>
+        <Row className='mb-4'>
           <Col>
             <Form.Group controlId='title'>
               <Form.Label>Title</Form.Label>
@@ -77,7 +78,7 @@ export const NoteList = ({ availableTags, notes }: NoteListProps) => {
           </Col>
         </Row>
       </Form>
-      <Row xs={1} sm={2} lg={3} xl={4} className='g-3'>
+      <Row xs={1} sm={2} lg={3} xl={4} gap={3}>
         {filteredNotes.map((note) => (
           <Col key={note.id}>
             <NoteCard id={note.id} title={note.title} tags={note.tags} />
@@ -86,14 +87,4 @@ export const NoteList = ({ availableTags, notes }: NoteListProps) => {
       </Row>
     </>
   );
-};
-
-type NoteCardProps = {
-  id: string;
-  title: string;
-  tags: Tag[];
-};
-
-const NoteCard = ({ id, title, tags }: NoteCardProps) => {
-  return <h1>NoteCard</h1>;
 };
