@@ -13,18 +13,20 @@ export const NoteList = ({ availableTags, notes }: NoteListProps) => {
 
   const filteredNotes = useMemo(() => {
     return notes.filter((note) => {
-      if (title === '') return true;
-      if (selectedTags.length === 0) return true;
+      const noSearchTitle = title === '';
+      const foundBySearchTitle = note.title
+        .toLowerCase()
+        .includes(title.toLocaleLowerCase());
 
-      if (note.title.toLowerCase().includes(title.toLocaleLowerCase()))
-        return true;
+      const noSearchTags = selectedTags.length === 0;
+      const matchAllSearchTags = selectedTags.every((tag) =>
+        note.tags.some((noteTag) => noteTag.id === tag.id)
+      );
 
-      if (
-        selectedTags.every((tag) =>
-          note.tags.some((noteTag) => noteTag.id === tag.id)
-        )
-      )
-        return true;
+      return (
+        (noSearchTitle || foundBySearchTitle) &&
+        (noSearchTags || matchAllSearchTags)
+      );
     });
   }, [title, selectedTags, notes]);
 
