@@ -1,3 +1,1 @@
 # notes-app
-
-## about
